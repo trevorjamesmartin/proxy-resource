@@ -45,7 +45,7 @@ app.get("/palettes/ch/:number", (req, res) => {
     // new record?
     const origin = result.url;
     const colors = JSON.stringify([colorOne, colorTwo, colorThree, colorFour]);
-    const number = n;
+    const number = req.params.number;
     const record = { colors, number, origin };
     upsert({ table: "palette", records: [record] });
     res.status(200).json({ origin, colorOne, colorTwo, colorThree, colorFour });
