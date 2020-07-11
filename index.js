@@ -47,21 +47,13 @@ app.get("/palettes/ch/:number", (req, res) => {
     const number = req.params.number;
     const record = { colors, number, origin };
     // const table = "palette";
-    palette.find({ number }).then((result) => {
-      if (result && result.number === number) {
-        console.log("found record");
-        // return result;
-        res.status(200).json(result);
-      } else {
-        palette.add(record).then((id) => {
-          console.log("add palette");
-          palette.find({ number }).then((res) => {
-            res.status(200).json(res);
-          });
-        });
-      }
+
+    palette.add({ colors, number, origin }).then((result) => {
+      console.log(result);
+      res
+        .status(200)
+        .json({ origin, colorOne, colorTwo, colorThree, colorFour });
     });
-    // res.status(200).json({ origin, colorOne, colorTwo, colorThree, colorFour });
   });
 });
 
