@@ -1,7 +1,7 @@
 const db = require("../database/connection");
 
-function find({ number }) {
-  return db("palette").where({ number }).first();
+function find({ id }) {
+  return db("palette").where({ id }).first();
 }
 
 function add(palette) {
@@ -12,9 +12,9 @@ function remove(id) {
   return db("palette").del().where({ id });
 }
 
-function update(palette, number) {
+function update(palette, id) {
   return db("palette")
-    .where({ number })
+    .where({ id })
     .first()
     .then((details) => {
       return { ...details, ...palette };
