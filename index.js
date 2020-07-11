@@ -1,9 +1,14 @@
-require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const request = require("request");
 const app = express();
+
+try {
+  require("dotenv").config();
+} catch {
+  console.log("not loading dotenv");
+}
 
 app.use(cors());
 app.use(helmet());
