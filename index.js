@@ -1,21 +1,22 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
 const request = require("request");
 const app = express();
 
 app.use(cors());
-
+app.use(helmet());
 app.get("/", (req, res) => {
   res.status(200).send("OK");
 });
-app.get("/colorHunt/palette/:number", (req, res) => {
+app.get("/palette/:number", (req, res) => {
   // return HTML color codes
-  const palette = req.params.number;
   const result = { url: "error" };
   try {
-    const n = Number(palette);
+    const n = Number(req.params.number);
     if (n > 0) {
-      result.url = `https://colorhunt.co/palette/${n}`;
+      result.url = `${process.env.CHP_URL}${n}`;
     }
   } catch {
     console.log("error");
