@@ -1,9 +1,8 @@
 exports.up = function (knex) {
   return knex.schema.createTable("palette", (tbl) => {
-    tbl.increments();
+    tbl.integer("id").primary(); // do not auto-increment.
     tbl.string("colors", 255);
     tbl.string("origin", 255);
-    tbl.unique("number");
   });
 };
 exports.down = function (knex) {

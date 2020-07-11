@@ -44,11 +44,10 @@ app.get("/palettes/ch/:number", (req, res) => {
     // new record?
     const origin = result.url;
     const colors = JSON.stringify([colorOne, colorTwo, colorThree, colorFour]);
-    const number = req.params.number;
-    const record = { colors, number, origin };
+    const id = req.params.number;
+    const record = { id, colors, origin };
     // const table = "palette";
-
-    palette.add({ colors, number, origin }).then((result) => {
+    palette.add(record).then((result) => {
       console.log(result);
       res
         .status(200)
