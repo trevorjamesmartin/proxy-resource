@@ -3,6 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const request = require("request");
 const app = express();
+const upsert = require("./util/upsert");
 
 try {
   require("dotenv").config();
@@ -41,7 +42,12 @@ app.get("/palettes/ch/:number", (req, res) => {
     const colorTwo = `#${colorString.substring(6, 12)}`;
     const colorThree = `#${colorString.substring(12, 18)}`;
     const colorFour = `#${colorString.substring(18)}`;
+    // new record?
     const origin = result.url;
+    const colors = JSON.stringify([colorOne, colorTwo, colorThree, colorFour]);
+    const number = n;
+    const record = { colors, number, origin };
+    upsert({ table: "palette", records: [record] });
     res.status(200).json({ origin, colorOne, colorTwo, colorThree, colorFour });
   });
 });
