@@ -3,8 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const request = require("request");
 const app = express();
-const upsert = require("./util/upsert");
-
+const palette = require("./api/palette");
 try {
   require("dotenv").config();
 } catch {
@@ -48,7 +47,9 @@ app.get("/palettes/ch/:number", (req, res) => {
     const number = req.params.number;
     const record = { colors, number, origin };
     const table = "palette";
-    upsert({ table, record });
+    palette.find({ number }).then((result) => {
+      console.log(result);
+    });
     res.status(200).json({ origin, colorOne, colorTwo, colorThree, colorFour });
   });
 });
