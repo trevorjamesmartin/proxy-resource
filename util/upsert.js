@@ -10,4 +10,4 @@ async function upsert({ table, records }) {
   return result;
 }
 
-export default upsert;
+module.exports = upsert;
