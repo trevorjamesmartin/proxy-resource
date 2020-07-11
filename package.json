@@ -1,0 +1,25 @@
+{
+  "name": "proxy-resource",
+  "version": "1.0.0",
+  "description": "",
+  "main": "api/index.js",
+  "scripts": {
+    "serve": "node api/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debauchery1st/proxy-resource.git"
+  },
+  "author": "Trevor Martin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/debauchery1st/proxy-resource/issues"
+  },
+  "homepage": "https://github.com/debauchery1st/proxy-resource#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "request": "^2.88.2"
+  }
+}
