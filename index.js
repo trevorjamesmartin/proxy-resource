@@ -46,9 +46,15 @@ app.get("/palettes/ch/:number", (req, res) => {
     const colors = JSON.stringify([colorOne, colorTwo, colorThree, colorFour]);
     const number = req.params.number;
     const record = { colors, number, origin };
-    const table = "palette";
+    // const table = "palette";
     palette.find({ number }).then((result) => {
-      console.log(result);
+      if (result && result.number === number) {
+        console.log("found record");
+        // return result;
+      } else {
+        palette.add(record);
+        console.log("add palette");
+      }
     });
     res.status(200).json({ origin, colorOne, colorTwo, colorThree, colorFour });
   });
