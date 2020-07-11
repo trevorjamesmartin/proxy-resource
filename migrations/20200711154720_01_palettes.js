@@ -3,10 +3,9 @@ exports.up = function (knex) {
     tbl.increments();
     tbl.string("colors", 255);
     tbl.string("origin", 255);
-    tbl.integer("number").unsigned();
+    tbl.unique("number");
   });
 };
-
 exports.down = function (knex) {
   return knex.schema.dropTableIfExists("palette");
 };
