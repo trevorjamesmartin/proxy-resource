@@ -1,13 +1,10 @@
 const knex = require("../database/connection");
 
-async function upsert({ table, records }) {
-  const result = await knex.raw(
-    `? ON CONFLICT number
-          DO NOTHING
-          RETURNING *;`,
-    [knex(table).insert(records)]
+function upsert({ table, record }) {
+  return knex.raw(
+    knex(table).insert(record).toQuery() +
+      ' ON CONFLICT ("number") DO NOTHING RETURNING *;'
   );
-  return result;
 }
 
 module.exports = upsert;
