@@ -47,7 +47,7 @@ app.get("/palettes/ch/:number", (req, res) => {
     const id = req.params.number;
     const record = { id, colors, origin };
     // const table = "palette";
-    palette.find(id).then((existing) => {
+    palette.find({ id }).then((existing) => {
       if (!existing || (existing && !existing.id)) {
         palette.add(record).then((result) => {
           console.log(result);
