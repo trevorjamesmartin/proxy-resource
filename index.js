@@ -15,7 +15,7 @@ app.use(helmet());
 app.get("/", (req, res) => {
   res.status(200).send("OK");
 });
-app.get("/palette/:number", (req, res) => {
+app.get("/palettes/ch/:number", (req, res) => {
   // return HTML color codes
   const result = { url: "error" };
   try {
