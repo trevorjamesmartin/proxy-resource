@@ -51,12 +51,17 @@ app.get("/palettes/ch/:number", (req, res) => {
       if (result && result.number === number) {
         console.log("found record");
         // return result;
+        res.status(200).json(result);
       } else {
-        palette.add(record);
-        console.log("add palette");
+        palette.add(record).then((id) => {
+          console.log("add palette");
+          palette.find({ number }).then((res) => {
+            res.status(200).json(res);
+          });
+        });
       }
     });
-    res.status(200).json({ origin, colorOne, colorTwo, colorThree, colorFour });
+    // res.status(200).json({ origin, colorOne, colorTwo, colorThree, colorFour });
   });
 });
 
