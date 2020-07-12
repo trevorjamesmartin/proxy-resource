@@ -1,6 +1,6 @@
 const request = require("request");
 
-function GetPalette(id, result, palette) {
+function GetPalette({ id, result, palette }) {
   request(result, (err, response, body) => {
     if (err || response.statusCode !== 200) {
       return res.status(500).json({ type: "error", message: err.message });

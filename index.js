@@ -29,11 +29,12 @@ app.get("/palettes/ch/:number", (req, res) => {
       // try to find in db
       existing && existing.id === n
         ? res.status(200).json(existing) // return existing record
-        : GetPalette(req.params.id, ch, palette); // fetch from url
+        : GetPalette({ id: req.params.id, result: ch, palette }); // fetch from url
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       console.log("catch");
+      GetPalette({ id: req.params.id, result: ch, palette }); // fetch from url
     }); // end pallete.find
 });
 
