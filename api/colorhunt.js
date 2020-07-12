@@ -1,6 +1,6 @@
 const request = require("request");
 
-function GetPalette({ id, result, palette, res }) {
+function GetPalette({ id, result, tbl, res }) {
   request(result, (err, response, body) => {
     if (err || response.statusCode !== 200) {
       return res.status(500).json({ type: "error", message: err.message });
@@ -19,8 +19,7 @@ function GetPalette({ id, result, palette, res }) {
     const origin = result.url;
     const colors = JSON.stringify([colorOne, colorTwo, colorThree, colorFour]);
     const record = { id, colors, origin };
-    // const table = "palette";
-    palette
+    tbl
       .add(record)
       .then((result) => {
         console.log(`added palette ${result}`);

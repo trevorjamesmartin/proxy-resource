@@ -8,19 +8,19 @@ router.get("/ch/:number", (req, res) => {
   if (n > 0) {
     ch.url = `${process.env.CHP_URL}${n}`;
   }
-  // result contains possibly valid url. check if db record exists
+  // result contains possibly valid url.
   palette
     .find({ id: n })
     .then((existing) => {
-      // try to find in db
+      //  check if db record exists
       existing && existing.id === n
         ? res.status(200).json(existing) // return existing record
-        : GetPalette({ id: n, result: ch, palette, res }); // fetch from url
+        : GetPalette({ id: n, result: ch, tbl: palette, res }); // request from url
     })
-    .catch((err) => {
+    .catch(() => {
       // console.log(err);
       console.log("catch from find");
-      GetPalette({ id: n, result: ch, palette, res }); // fetch from url
+      GetPalette({ id: n, result: ch, tbl: palette, res }); // request from url
     }); // end pallete.find
 });
 module.exports = router;
