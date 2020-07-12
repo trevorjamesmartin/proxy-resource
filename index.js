@@ -23,11 +23,10 @@ app.get("/palettes/ch/:number", (req, res) => {
     result.url = `${process.env.CHP_URL}${n}`;
   }
   // result contains possibly valid url. check if db record exists
-
   try {
     palette.find({ id: n }).then((existing) => {
       // try to find in db
-      if (existing && existing.id == n) {
+      if (existing && existing.id === n) {
         res.status(200).json(existing); // return existing record
       }
       // otherwise fetch from colorHunt
