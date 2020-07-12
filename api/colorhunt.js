@@ -1,5 +1,13 @@
 const request = require("request");
 
+/**
+ *
+ * @param {Number} id colorHunt schema palette number
+ * @param {Object} result { url }
+ * @param {*} tbl knex db table instance
+ * @param {*} res response
+ *
+ */
 function GetPalette({ id, result, tbl, res }) {
   request(result, (err, response, body) => {
     if (err || response.statusCode !== 200) {
