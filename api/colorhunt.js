@@ -24,7 +24,6 @@ function GetPalette({ id, result, palette, res }) {
       .add(record)
       .then((result) => {
         console.log(`added palette ${result}`);
-        return record;
         res.status(200).json(record);
       })
       .catch((err) => {
