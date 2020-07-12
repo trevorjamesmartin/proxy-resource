@@ -34,7 +34,7 @@ app.get("/palettes/ch/:number", (req, res) => {
     .catch((err) => {
       // console.log(err);
       console.log("catch");
-      GetPalette({ id: n, result: ch, palette }); // fetch from url
+      GetPalette({ id: n, result: ch, palette, res }); // fetch from url
     }); // end pallete.find
 });
 
