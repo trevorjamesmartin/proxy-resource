@@ -29,7 +29,7 @@ app.get("/palettes/ch/:number", (req, res) => {
       // try to find in db
       existing && existing.id === n
         ? res.status(200).json(existing) // return existing record
-        : GetPalette(ch); // fetch from url
+        : GetPalette(req.params.id, ch); // fetch from url
     })
     .catch((err) => {
       console.log(err);

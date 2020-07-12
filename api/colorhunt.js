@@ -1,6 +1,6 @@
 const request = require("request");
 
-function GetPalette(result) {
+function GetPalette(id, result) {
   request(result, (err, response, body) => {
     if (err || response.statusCode !== 200) {
       return res.status(500).json({ type: "error", message: err.message });
@@ -18,7 +18,6 @@ function GetPalette(result) {
     const colorFour = `#${colorString.substring(18)}`;
     const origin = result.url;
     const colors = JSON.stringify([colorOne, colorTwo, colorThree, colorFour]);
-    const id = req.params.number;
     const record = { id, colors, origin };
     // const table = "palette";
     palette
