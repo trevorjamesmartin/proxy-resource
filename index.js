@@ -18,56 +18,55 @@ app.get("/", (req, res) => {
 app.get("/palettes/ch/:number", (req, res) => {
   // return HTML color codes
   const result = { url: "error" };
-  try {
-    const n = Number(req.params.number);
-    if (n > 0) {
-      result.url = `${process.env.CHP_URL}${n}`;
-    }
-  } catch {
-    console.log("error");
-    res.status(404).json([]);
+  const n = Number(req.params.number);
+  if (n > 0) {
+    result.url = `${process.env.CHP_URL}${n}`;
   }
-  palette.find({ id: n }).then((existing) => {
-    // try to find in db
-    if (existing && existing.id == n) {
-      res.status(200).json(existing); // return existing record
-    }
-    // fetch from colorHunt
-    request(result, (err, response, body) => {
-      if (err || response.statusCode !== 200) {
-        return res.status(500).json({ type: "error", message: err.message });
-      }
-      const txt = body
-        .split("\n")
-        .filter((line) => line.match(/itemer/))
-        .map((i) => i.split(";")[0])[0]
-        .split(",")[2]
-        .replace(" ", "");
-      const colorString = txt.replace(/[^a-z0-9]/gi, "");
-      const colorOne = `#${colorString.substring(0, 6)}`;
-      const colorTwo = `#${colorString.substring(6, 12)}`;
-      const colorThree = `#${colorString.substring(12, 18)}`;
-      const colorFour = `#${colorString.substring(18)}`;
-      // new record?
-      const origin = result.url;
-      const colors = JSON.stringify([
-        colorOne,
-        colorTwo,
-        colorThree,
-        colorFour,
-      ]);
-      const id = req.params.number;
-      const record = { id, colors, origin };
-      // const table = "palette";
-    });
+  // result contains possibly valid url. check if db record exists
 
-    palette.add(record).then((result) => {
-      console.log(`added palette ${result}`);
-      res
-        .status(200)
-        .json({ origin, colorOne, colorTwo, colorThree, colorFour });
-    });
-  });
+  try {
+    palette.find({ id: n }).then((existing) => {
+      // try to find in db
+      if (existing && existing.id == n) {
+        res.status(200).json(existing); // return existing record
+      }
+      // otherwise fetch from colorHunt
+      request(result, (err, response, body) => {
+        if (err || response.statusCode !== 200) {
+          return res.status(500).json({ type: "error", message: err.message });
+        }
+        const txt = body
+          .split("\n")
+          .filter((line) => line.match(/itemer/))
+          .map((i) => i.split(";")[0])[0]
+          .split(",")[2]
+          .replace(" ", "");
+        const colorString = txt.replace(/[^a-z0-9]/gi, "");
+        const colorOne = `#${colorString.substring(0, 6)}`;
+        const colorTwo = `#${colorString.substring(6, 12)}`;
+        const colorThree = `#${colorString.substring(12, 18)}`;
+        const colorFour = `#${colorString.substring(18)}`;
+        const origin = result.url;
+        const colors = JSON.stringify([
+          colorOne,
+          colorTwo,
+          colorThree,
+          colorFour,
+        ]);
+        const id = req.params.number;
+        const record = { id, colors, origin };
+        // const table = "palette";
+        palette.add(record).then((result) => {
+          console.log(`added palette ${result}`);
+          res
+            .status(200)
+            .json({ origin, colorOne, colorTwo, colorThree, colorFour });
+        }); // end palette.add
+      }); // end request
+    }); // end pallete.find
+  } catch {
+    console.log("no existing record, retrieve with url");
+  }
 });
 
 const PORT = process.env.PORT || 4000;
