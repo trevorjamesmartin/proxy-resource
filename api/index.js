@@ -23,4 +23,8 @@ router.get("/ch/:number", (req, res) => {
       GetPalette({ id: n, result: ch, tbl: palette, res }); // request from url
     }); // end pallete.find
 });
+
+router.get("/", (req, res) => {
+  palette.findAll().then((list) => res.status(200).json(list));
+});
 module.exports = router;

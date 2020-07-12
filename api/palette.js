@@ -4,6 +4,10 @@ function find({ id }) {
   return db("palette").where({ id }).first();
 }
 
+function findAll() {
+  return db("palette");
+}
+
 function add(palette) {
   return db("palette").insert(palette, "id");
 }
@@ -24,4 +28,4 @@ function update(palette, id) {
     });
 }
 
-module.exports = { find, add, remove, update };
+module.exports = { find, add, remove, update, findAll };
